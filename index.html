@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gacha Hidup</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        background: #fef9f4;
+        font-family: 'Segoe UI', sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+        color: #5e3c2c;
+        margin-bottom: 10px;
+      }
+
+      p.sub {
+        font-size: 1.1rem;
+        color: #8b5e3c;
+        margin-bottom: 30px;
+      }
+
+      button {
+        padding: 12px 24px;
+        font-size: 16px;
+        background-color: #8b5e3c;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        margin-top: 12px;
+      }
+
+      button:hover {
+        background-color: #6f452c;
+      }
+
+      #hasilQuote {
+        margin-top: 30px;
+        max-width: 500px;
+        font-size: 1.4rem;
+        color: #40342f;
+        padding: 20px;
+        background: #fff7ed;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        display: none;
+      }
+
+      .fade-in {
+        animation: fadeIn 0.6s ease forwards;
+      }
+
+      .no-animation {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 440px), (max-height: 950px) {
+        body {
+          padding: 20px;
+        }
+
+        h1 {
+          font-size: 2.4rem;
+        }
+
+        p.sub {
+          font-size: 1.3rem;
+          margin-bottom: 24px;
+        }
+
+        button {
+          font-size: 1.2rem;
+          padding: 14px 28px;
+        }
+
+        #hasilQuote {
+          font-size: 1.5rem;
+          padding: 24px;
+          margin-top: 24px;
+        }
+      }
+
+      @media (width: 2560px) and (height: 1993px) {
+        @media (max-width: 2560px) {
+          body {
+            padding: 60px;
+          }
+
+          h1 {
+            font-size: 3rem;
+          }
+
+          p.sub {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+          }
+
+          button {
+            font-size: 1.4rem;
+            padding: 16px 32px;
+          }
+
+          #hasilQuote {
+            font-size: 1.8rem;
+            padding: 32px;
+            max-width: 800px;
+            margin-top: 40px;
+          }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="captureArea">
+      <h1>🎲 Gacha Kan</h1>
+      <p class="sub">Kamu butuh....</p>
+
+      <button onclick="gacha()">Gacha 💭</button>
+      <div id="hasilQuote"></div>
+    </div>
+
+    <button onclick="simpanGambar()">Simpan 📷</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+      const quotes = [
+        'Tidur ego jangan main hp mulu',
+        'Duit...thats it',
+        'Makan,jangan nunda nunda dah ntar maag',
+        'Istirahat,jangan overthinking mulu',
+        'Aksi,mending day one daripada one day',
+        'Stop scrolling,get a job',
+        'DO YOUR JOBB',
+        'Find your own goal',
+        'Life purpose',
+        'Barang baru,lets go masukan keranjang',
+        'Lupakan hal lama,dan buat yang lebih baik',
+        'Produktif apapun kegiatan nya',
+        'Stop galau dan mulai plan sesuatu',
+        'Take some rest,you did well',
+      ]
+
+      function gacha() {
+        const el = document.getElementById('hasilQuote')
+        const random = quotes[Math.floor(Math.random() * quotes.length)]
+        el.textContent = random
+        el.style.display = 'block'
+
+        el.classList.remove('fade-in')
+        void el.offsetWidth
+        el.classList.add('fade-in')
+
+        confetti({
+          particleCount: 150,
+          angle: 60,
+          spread: 100,
+          origin: { x: 0 }
+        })
+        confetti({
+          particleCount: 150,
+          angle: 120,
+          spread: 100,
+          origin: { x: 1 }
+        })
+      }
+
+      function simpanGambar() {
+        const area = document.getElementById('captureArea')
+        const quoteBox = document.getElementById('hasilQuote')
+
+        quoteBox.classList.add('no-animation')
+
+        html2canvas(area).then(canvas => {
+          const link = document.createElement('a')
+          link.download = 'hasil-gacha.png'
+          link.href = canvas.toDataURL('image/png')
+          link.click()
+
+          quoteBox.classList.remove('no-animation')
+        })
+      }
+    </script>
+  </body>
+</html>
